@@ -3,6 +3,7 @@ package com.example.portfolio.controller;
 import com.example.portfolio.service.UserService;
 import com.example.portfolio.service.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,12 +17,20 @@ public class UserController {
 
     @PostMapping()
     public ResponseEntity<String> create(@RequestBody UserDTO userDTO) {
-        if(userService.create(userDTO)){
-            return ResponseEntity.ok("Da update thanh cong");
+
+        try{
+            if(userService.exists(userDTO.getEmail())){
+                return ResponseEntity.badRequest().body("User is taken");
+            }
+            if(userService.create(userDTO)){
+                return ResponseEntity.ok("Da update thanh cong");
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Khong update thanh cong");
         }
-        else{
-            return ResponseEntity.badRequest().body("Khong update thanh cong");
+        catch(Exception e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
+
     }
     @GetMapping()
     public ResponseEntity<List<UserDTO>> findAll(){
