@@ -1,5 +1,6 @@
 package com.example.portfolio.auth;
 
+import com.example.portfolio.form.FormUserLogin;
 import com.example.portfolio.service.UserService;
 import com.example.portfolio.service.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,14 @@ public class AuthController {
         if(userService.exists(userDTO.getEmail())){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User name's already taken");
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(authService.register(userDTO));
+        AuthResponse response = authService.register(userDTO);
+        if (response==null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cannot return jwt");
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody FormUserLogin request){
+        return ResponseEntity.ok().body(authService.login(request));
     }
 }

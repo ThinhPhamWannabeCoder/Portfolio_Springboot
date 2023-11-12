@@ -1,10 +1,7 @@
 package com.example.portfolio.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -14,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name="user")
+//@ToString(exclude = "userroleList") // Exclude the userroleList from toString to avoid LazyInitializationException
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +32,7 @@ public class UserEntity {
 //    private Date createdDate;
 
     //    One to Many
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<UserRoleEntity> userroleList;
 
 //    @OneToMany(mappedBy = "user")

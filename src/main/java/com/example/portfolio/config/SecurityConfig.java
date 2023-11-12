@@ -1,5 +1,6 @@
 package com.example.portfolio.config;
 
+import com.example.portfolio.auth.JwtAuthFilter;
 import com.example.portfolio.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final UserService userService;
-//    private final JwtAuthFilter jwtAuthFilter;
+    private final JwtAuthFilter jwtAuthFilter;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
@@ -29,15 +30,15 @@ public class SecurityConfig {
 //                .exceptionHandling()
 //                .authenticationEntryPoint(authenticationEntryPoint)
 //                .and()
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/auth/**", "api/admin/user").permitAll()
-                .anyRequest().authenticated();
-//                .and()
-//                .authenticationProvider(authenticationProvider()) //cho them sau
-//                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class); //cho them sau de ben trong congi
+                .requestMatchers("/api/auth/**", "api/admin/user/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .authenticationProvider(authenticationProvider()) //cho them sau
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class); //cho them sau de ben trong congi
 
         return http.build();
     }

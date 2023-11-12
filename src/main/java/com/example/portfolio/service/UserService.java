@@ -1,5 +1,6 @@
 package com.example.portfolio.service;
 
+import com.example.portfolio.entity.RoleEntity;
 import com.example.portfolio.entity.UserEntity;
 import com.example.portfolio.entity.UserRoleEntity;
 import com.example.portfolio.repository.RoleRepository;
@@ -9,17 +10,19 @@ import com.example.portfolio.service.dto.UserDTO;
 import com.example.portfolio.service.dto.UserRoleDTO;
 import com.example.portfolio.service.mapper.UserMapper;
 import com.example.portfolio.service.mapper.UserRoleMapper;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
@@ -75,7 +78,13 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        UserEntity userEntity = userRepository.findByEmail(email).orElseThrow(()-> new UsernameNotFoundException(email));
+        return new User(userEntity.getEmail(),
+                userEntity.getPassword(),
+                mapRolesToAuthorities(userEntity.getUserroleList().stream().map(userRoleEntity -> userRoleEntity.getRole()).collect(Collectors.toList())));
+    }
+    private List<GrantedAuthority> mapRolesToAuthorities(List<RoleEntity> roleEntities){
+        return roleEntities.stream().map(roleEntity -> new SimpleGrantedAuthority(roleEntity.getName())).collect(Collectors.toList());
     }
 }
