@@ -40,17 +40,5 @@ public class UserController {
     public ResponseEntity<List<UserDTO>> findAll(){
         return  ResponseEntity.ok().body(userService.getAll());
     }
-    @GetMapping("/test")
-    public ResponseEntity<?> test(@RequestBody String email){
-        try{
-            UserDetails optionalUserEntity = userService.loadUserByUsername(email);
 
-            return ResponseEntity.ok().body(optionalUserEntity);
-        }
-        catch (Exception e){
-            return ResponseEntity.ok().body(e.getMessage());
-        }
-
-
-    }
 }

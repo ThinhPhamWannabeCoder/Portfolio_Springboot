@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +18,13 @@ public class AuthService {
     private final UserService userService;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final UserDetailsService userDetailsService;
+
     public AuthResponse register(UserDTO userDTO){
         userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         if(userService.create(userDTO)){
-            UserDetails userDetails = userService.loadUserByUsername(userDTO.getEmail());
-            String token =jwtService.generateToken(userDetails);
-            return AuthResponse.builder().jwtToken(token).build();
+            String token = jwtService.generateToken(userDetailsService.loadUserByUsername(userDTO.getEmail()));
+            return AuthResponse.builder().jwtToken(token).type("jwt").build();
 
         }
         return null;
@@ -34,8 +36,7 @@ public class AuthService {
                         formUserLogin.getPassword()
                 )
         );
-        UserDetails userDetails = userService.loadUserByUsername(formUserLogin.getEmail());
-        String token =jwtService.generateToken(userDetails);
+        String token =jwtService.generateToken(userDetailsService.loadUserByUsername(formUserLogin.getEmail()));
         return AuthResponse.builder().jwtToken(token).build();
     }
 }

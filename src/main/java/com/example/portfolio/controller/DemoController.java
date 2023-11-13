@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/demo")
 public class DemoController {
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<String> Hello(){
-        return ResponseEntity.ok().body("hehe");
+
+        return ResponseEntity.ok("chan lam roi");
     }
 }
