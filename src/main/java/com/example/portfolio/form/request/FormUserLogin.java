@@ -1,4 +1,4 @@
-package com.example.portfolio.form;
+package com.example.portfolio.form.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

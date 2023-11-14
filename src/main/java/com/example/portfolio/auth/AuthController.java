@@ -1,6 +1,6 @@
 package com.example.portfolio.auth;
 
-import com.example.portfolio.form.FormUserLogin;
+import com.example.portfolio.form.request.FormUserLogin;
 import com.example.portfolio.service.UserService;
 import com.example.portfolio.service.dto.UserDTO;
 import lombok.RequiredArgsConstructor;

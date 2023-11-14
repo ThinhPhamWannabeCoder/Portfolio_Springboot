@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class UserRoleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_role_id")
     private Integer id;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName ="user_id", nullable = false)
