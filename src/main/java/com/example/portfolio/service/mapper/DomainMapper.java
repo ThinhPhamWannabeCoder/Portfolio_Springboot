@@ -13,17 +13,18 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class DomainMapper {
     private final ModelMapper modelMapper;
-    public DomainEntity toEntity(DomainDTO DomainDTO){
-        return modelMapper.map(DomainDTO, DomainEntity.class);
+
+    public DomainEntity toEntity(DomainDTO domainDTO){
+        return modelMapper.map(domainDTO, DomainEntity.class);
     }
-    public DomainDTO toDTO(DomainEntity Domain){
-        return modelMapper.map(Domain, DomainDTO.class);
+    public DomainDTO toDTO(DomainEntity domainEntity){
+        return modelMapper.map(domainEntity, DomainDTO.class);
     }
     //    Chuyen doi list
-    public List<DomainEntity> toEntities(List<DomainDTO> DomainDTOS){
-        return DomainDTOS.stream().map(DomainDTO -> modelMapper.map(DomainDTO, DomainEntity.class)).collect(Collectors.toList());
+    public List<DomainEntity> toEntities(List<DomainDTO> domainDTOS){
+        return domainDTOS.stream().map(domainDTO -> modelMapper.map(domainDTO, DomainEntity.class)).collect(Collectors.toList());
     }
-    public List<DomainDTO> toDTOS(List<DomainEntity> Domains){
-        return Domains.stream().map(Domain -> modelMapper.map(Domain, DomainDTO.class)).collect(Collectors.toList());
+    public List<DomainDTO> toDTOS(List<DomainEntity> domainEntities){
+        return domainEntities.stream().map(domainEntity -> modelMapper.map(domainEntity, DomainDTO.class)).collect(Collectors.toList());
     }
 }

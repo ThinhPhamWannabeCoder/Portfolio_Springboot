@@ -1,6 +1,8 @@
 package com.example.portfolio.service.mapper;
 
 import com.example.portfolio.entity.ProjectToolRefEntity;
+import com.example.portfolio.entity.ProjectToolRefEntity;
+import com.example.portfolio.service.dto.ProjectToolRefDTO;
 import com.example.portfolio.service.dto.ProjectToolRefDTO;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -13,17 +15,35 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProjectToolRefMapper {
     private final ModelMapper modelMapper;
-    public ProjectToolRefEntity toEntity(ProjectToolRefDTO ProjectToolRefDTO){
-        return modelMapper.map(ProjectToolRefDTO, ProjectToolRefEntity.class);
+    private final SkillMapper skillMapper;
+    private final ProjectMapper projectMapper;
+    public ProjectToolRefEntity toEntity(ProjectToolRefDTO projectToolRefDTO){
+        ProjectToolRefEntity entity = modelMapper.map(projectToolRefDTO, ProjectToolRefEntity.class);
+        entity.setTool(skillMapper.toEntity(projectToolRefDTO.getToolDTO()));
+        entity.setProject(projectMapper.toEntity(projectToolRefDTO.getProjectDTO()));
+        return entity;
     }
-    public ProjectToolRefDTO toDTO(ProjectToolRefEntity ProjectToolRef){
-        return modelMapper.map(ProjectToolRef, ProjectToolRefDTO.class);
+    public ProjectToolRefDTO toDTO(ProjectToolRefEntity projectToolRefEntity){
+        ProjectToolRefDTO dto = modelMapper.map(projectToolRefEntity, ProjectToolRefDTO.class);;
+        dto.setToolDTO(skillMapper.toDTO(projectToolRefEntity.getTool()));
+        dto.setProjectDTO(projectMapper.toDTO(projectToolRefEntity.getProject()));
+        return dto;
     }
     //    Chuyen doi list
-    public List<ProjectToolRefEntity> toEntities(List<ProjectToolRefDTO> ProjectToolRefDTOS){
-        return ProjectToolRefDTOS.stream().map(ProjectToolRefDTO -> modelMapper.map(ProjectToolRefDTO, ProjectToolRefEntity.class)).collect(Collectors.toList());
+    public List<ProjectToolRefEntity> toEntities(List<ProjectToolRefDTO> projectToolRefDTOS){
+        return projectToolRefDTOS.stream().map(projectToolRefDTO -> {
+            ProjectToolRefEntity entity = modelMapper.map(projectToolRefDTO, ProjectToolRefEntity.class);
+            entity.setTool(skillMapper.toEntity(projectToolRefDTO.getToolDTO()));
+            entity.setProject(projectMapper.toEntity(projectToolRefDTO.getProjectDTO()));
+            return entity;
+        }).collect(Collectors.toList());
     }
-    public List<ProjectToolRefDTO> toDTOS(List<ProjectToolRefEntity> ProjectToolRefs){
-        return ProjectToolRefs.stream().map(ProjectToolRef -> modelMapper.map(ProjectToolRef, ProjectToolRefDTO.class)).collect(Collectors.toList());
+    public List<ProjectToolRefDTO> toDTOS(List<ProjectToolRefEntity> projectToolRefEntities){
+        return projectToolRefEntities.stream().map(projectToolRefEntity -> {
+            ProjectToolRefDTO dto = modelMapper.map(projectToolRefEntity, ProjectToolRefDTO.class);;
+            dto.setToolDTO(skillMapper.toDTO(projectToolRefEntity.getTool()));
+            dto.setProjectDTO(projectMapper.toDTO(projectToolRefEntity.getProject()));
+            return dto;
+        }).collect(Collectors.toList());
     }
 }

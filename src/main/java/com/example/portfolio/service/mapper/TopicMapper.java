@@ -13,17 +13,30 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class TopicMapper {
     private final ModelMapper modelMapper;
-    public TopicEntity toEntity(TopicDTO TopicDTO){
-        return modelMapper.map(TopicDTO, TopicEntity.class);
+    private final DomainMapper domainMapper;
+    public TopicEntity toEntity(TopicDTO topicDTO){
+        TopicEntity entity = modelMapper.map(topicDTO, TopicEntity.class);
+        entity.setDomain(domainMapper.toEntity(topicDTO.getDomainDTO()));
+        return entity;
     }
-    public TopicDTO toDTO(TopicEntity Topic){
-        return modelMapper.map(Topic, TopicDTO.class);
+    public TopicDTO toDTO(TopicEntity topicEntity){
+        TopicDTO dto = modelMapper.map(topicEntity, TopicDTO.class);
+        dto.setDomainDTO(domainMapper.toDTO(topicEntity.getDomain()));
+        return dto;
     }
     //    Chuyen doi list
-    public List<TopicEntity> toEntities(List<TopicDTO> TopicDTOS){
-        return TopicDTOS.stream().map(TopicDTO -> modelMapper.map(TopicDTO, TopicEntity.class)).collect(Collectors.toList());
+    public List<TopicEntity> toEntities(List<TopicDTO> topicDTOS){
+        return topicDTOS.stream().map(topicDTO -> {
+            TopicEntity entity = modelMapper.map(topicDTO, TopicEntity.class);
+            entity.setDomain(domainMapper.toEntity(topicDTO.getDomainDTO()));
+            return entity;
+        }).collect(Collectors.toList());
     }
-    public List<TopicDTO> toDTOS(List<TopicEntity> Topics){
-        return Topics.stream().map(Topic -> modelMapper.map(Topic, TopicDTO.class)).collect(Collectors.toList());
+    public List<TopicDTO> toDTOS(List<TopicEntity> topicEntitiesics){
+        return topicEntitiesics.stream().map(topicEntity -> {
+            TopicDTO dto = modelMapper.map(topicEntity, TopicDTO.class);
+            dto.setDomainDTO(domainMapper.toDTO(topicEntity.getDomain()));
+            return dto;
+        }).collect(Collectors.toList());
     }
 }

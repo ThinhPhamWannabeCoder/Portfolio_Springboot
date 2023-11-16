@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/projecttool")
+@RequestMapping("api/user/projectTool")
 @RequiredArgsConstructor
 public class ProjectToolRefController {
     private final ProjectToolRefService projectToolRefService;

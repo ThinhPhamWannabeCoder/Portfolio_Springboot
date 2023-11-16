@@ -13,17 +13,30 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SkillMapper {
     private final ModelMapper modelMapper;
-    public SkillEntity toEntity(SkillDTO SkillDTO){
-        return modelMapper.map(SkillDTO, SkillEntity.class);
+    private final SkillTypeMapper skillTypeMapper;
+    public SkillEntity toEntity(SkillDTO skillDTO){
+        SkillEntity entity = modelMapper.map(skillDTO, SkillEntity.class);
+        entity.setSkillType(skillTypeMapper.toEntity(skillDTO.getSkillTypeDTO()));
+        return entity;
     }
-    public SkillDTO toDTO(SkillEntity Skill){
-        return modelMapper.map(Skill, SkillDTO.class);
+    public SkillDTO toDTO(SkillEntity skillEntity){
+        SkillDTO dto = modelMapper.map(skillEntity, SkillDTO.class);
+        dto.setSkillTypeDTO(skillTypeMapper.toDTO(skillEntity.getSkillType()));
+        return dto;
     }
     //    Chuyen doi list
-    public List<SkillEntity> toEntities(List<SkillDTO> SkillDTOS){
-        return SkillDTOS.stream().map(SkillDTO -> modelMapper.map(SkillDTO, SkillEntity.class)).collect(Collectors.toList());
+    public List<SkillEntity> toEntities(List<SkillDTO> skillDTOS){
+        return skillDTOS.stream().map(skillDTO -> {
+            SkillEntity entity = modelMapper.map(skillDTO, SkillEntity.class);
+            entity.setSkillType(skillTypeMapper.toEntity(skillDTO.getSkillTypeDTO()));
+            return entity;
+        }).collect(Collectors.toList());
     }
-    public List<SkillDTO> toDTOS(List<SkillEntity> Skills){
-        return Skills.stream().map(Skill -> modelMapper.map(Skill, SkillDTO.class)).collect(Collectors.toList());
+    public List<SkillDTO> toDTOS(List<SkillEntity> skillEntities){
+        return skillEntities.stream().map(skillEntity ->{
+            SkillDTO dto = modelMapper.map(skillEntity, SkillDTO.class);
+            dto.setSkillTypeDTO(skillTypeMapper.toDTO(skillEntity.getSkillType()));
+            return dto;
+        }).collect(Collectors.toList());
     }
 }

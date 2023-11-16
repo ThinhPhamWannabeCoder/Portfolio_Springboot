@@ -22,7 +22,7 @@ public class SkillEntity {
     @JoinColumn(name = "skill_type_id", referencedColumnName = "skill_type_id", nullable = false)
     private SkillTypeEntity skillType;
 
-    @Column(name = "skill_name", columnDefinition = "NVARCHAR(30)", nullable = false, unique = true)
+    @Column(name = "skill_name", columnDefinition = "NVARCHAR(50)", nullable = false, unique = true)
     private String name;
     @Column(name = "skill_desc", columnDefinition = "TEXT", nullable = false)
     private String desc;

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/topic")
+@RequestMapping("api/user/topic")
 @RequiredArgsConstructor
 public class TopicController {
     private final TopicService topicService;
@@ -20,7 +20,7 @@ public class TopicController {
         return ResponseEntity.ok().body(topicService.getAll());
     }
     @GetMapping("/domain/{domainId}")
-    public ResponseEntity<?> getAllBySkillTypeId(@PathVariable(name="domainId", required = true) Integer domainId){
+    public ResponseEntity<?> getAllByDomainId(@PathVariable(name="domainId", required = true) Integer domainId){
         return ResponseEntity.ok().body(topicService.getByDomainId(domainId));
     }
 }

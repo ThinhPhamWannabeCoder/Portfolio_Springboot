@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/skilltype")
+@RequestMapping("api/user/skillType")
 @RequiredArgsConstructor
 public class SkillTypeController {
     private final SkillTypeService skillTypeService;

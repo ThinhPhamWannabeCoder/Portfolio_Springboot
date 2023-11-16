@@ -13,17 +13,35 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProjectLanguageRefMapper {
     private final ModelMapper modelMapper;
-    public ProjectLanguageRefEntity toEntity(ProjectLanguageRefDTO ProjectLanguageRefDTO){
-        return modelMapper.map(ProjectLanguageRefDTO, ProjectLanguageRefEntity.class);
+    private final SkillMapper skillMapper;
+    private final ProjectMapper projectMapper;
+    public ProjectLanguageRefEntity toEntity(ProjectLanguageRefDTO projectLanguageRefDTO){
+        ProjectLanguageRefEntity entity = modelMapper.map(projectLanguageRefDTO, ProjectLanguageRefEntity.class);
+        entity.setLanguage(skillMapper.toEntity(projectLanguageRefDTO.getLanguageDTO()));
+        entity.setProject(projectMapper.toEntity(projectLanguageRefDTO.getProjectDTO()));
+        return entity;
     }
-    public ProjectLanguageRefDTO toDTO(ProjectLanguageRefEntity ProjectLanguageRef){
-        return modelMapper.map(ProjectLanguageRef, ProjectLanguageRefDTO.class);
+    public ProjectLanguageRefDTO toDTO(ProjectLanguageRefEntity projectLanguageRefEntity){
+        ProjectLanguageRefDTO dto = modelMapper.map(projectLanguageRefEntity, ProjectLanguageRefDTO.class);;
+        dto.setLanguageDTO(skillMapper.toDTO(projectLanguageRefEntity.getLanguage()));
+        dto.setProjectDTO(projectMapper.toDTO(projectLanguageRefEntity.getProject()));
+        return dto;
     }
     //    Chuyen doi list
-    public List<ProjectLanguageRefEntity> toEntities(List<ProjectLanguageRefDTO> ProjectLanguageRefDTOS){
-        return ProjectLanguageRefDTOS.stream().map(ProjectLanguageRefDTO -> modelMapper.map(ProjectLanguageRefDTO, ProjectLanguageRefEntity.class)).collect(Collectors.toList());
+    public List<ProjectLanguageRefEntity> toEntities(List<ProjectLanguageRefDTO> projectLanguageRefDTOS){
+        return projectLanguageRefDTOS.stream().map(projectLanguageRefDTO -> {
+            ProjectLanguageRefEntity entity = modelMapper.map(projectLanguageRefDTO, ProjectLanguageRefEntity.class);
+            entity.setLanguage(skillMapper.toEntity(projectLanguageRefDTO.getLanguageDTO()));
+            entity.setProject(projectMapper.toEntity(projectLanguageRefDTO.getProjectDTO()));
+            return entity;
+        }).collect(Collectors.toList());
     }
-    public List<ProjectLanguageRefDTO> toDTOS(List<ProjectLanguageRefEntity> ProjectLanguageRefs){
-        return ProjectLanguageRefs.stream().map(ProjectLanguageRef -> modelMapper.map(ProjectLanguageRef, ProjectLanguageRefDTO.class)).collect(Collectors.toList());
+    public List<ProjectLanguageRefDTO> toDTOS(List<ProjectLanguageRefEntity> projectLanguageRefEntities){
+        return projectLanguageRefEntities.stream().map(projectLanguageRefEntity -> {
+            ProjectLanguageRefDTO dto = modelMapper.map(projectLanguageRefEntity, ProjectLanguageRefDTO.class);;
+            dto.setLanguageDTO(skillMapper.toDTO(projectLanguageRefEntity.getLanguage()));
+            dto.setProjectDTO(projectMapper.toDTO(projectLanguageRefEntity.getProject()));
+            return dto;
+        }).collect(Collectors.toList());
     }
 }

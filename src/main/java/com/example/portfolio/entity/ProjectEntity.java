@@ -26,7 +26,7 @@ public class ProjectEntity {
 
     @Column(name = "project_name", columnDefinition = "NVARCHAR(20)",nullable = false, unique = true)
     private String name;
-    @Column(name = "domain_desc", columnDefinition = "TEXT", nullable = false)
+    @Column(name = "project_desc", columnDefinition = "TEXT", nullable = false)
     private String desc;
     @Column(name = "project_date", nullable = false)
     private Date date;
@@ -36,6 +36,6 @@ public class ProjectEntity {
     @OneToMany(mappedBy = "project")
     List<ProjectToolRefEntity> projectToolRefEntityList;
 //
-//    @OneToMany(mappedBy = "project")
-//    List<Post> postList;
+    @OneToMany(mappedBy = "project")
+    List<PostEntity> postEntityList;
 }

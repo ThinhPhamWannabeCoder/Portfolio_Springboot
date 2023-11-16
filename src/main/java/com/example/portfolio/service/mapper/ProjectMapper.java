@@ -13,17 +13,31 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProjectMapper {
     private final ModelMapper modelMapper;
-    public ProjectEntity toEntity(ProjectDTO ProjectDTO){
-        return modelMapper.map(ProjectDTO, ProjectEntity.class);
+    private final TopicMapper topicMapper;
+
+    public ProjectEntity toEntity(ProjectDTO projectDTO){
+        ProjectEntity entity = modelMapper.map(projectDTO, ProjectEntity.class);
+        entity.setTopic(topicMapper.toEntity(projectDTO.getTopicDTO()));
+        return entity;
     }
-    public ProjectDTO toDTO(ProjectEntity Project){
-        return modelMapper.map(Project, ProjectDTO.class);
+    public ProjectDTO toDTO(ProjectEntity projectEntity){
+        ProjectDTO dto = modelMapper.map(projectEntity, ProjectDTO.class);
+        dto.setTopicDTO(topicMapper.toDTO(projectEntity.getTopic()));
+        return dto;
     }
     //    Chuyen doi list
-    public List<ProjectEntity> toEntities(List<ProjectDTO> ProjectDTOS){
-        return ProjectDTOS.stream().map(ProjectDTO -> modelMapper.map(ProjectDTO, ProjectEntity.class)).collect(Collectors.toList());
+    public List<ProjectEntity> toEntities(List<ProjectDTO> projectDTOS){
+        return projectDTOS.stream().map(projectDTO -> {
+            ProjectEntity entity = modelMapper.map(projectDTO, ProjectEntity.class);
+            entity.setTopic(topicMapper.toEntity(projectDTO.getTopicDTO()));
+            return entity;
+        }).collect(Collectors.toList());
     }
-    public List<ProjectDTO> toDTOS(List<ProjectEntity> Projects){
-        return Projects.stream().map(Project -> modelMapper.map(Project, ProjectDTO.class)).collect(Collectors.toList());
+    public List<ProjectDTO> toDTOS(List<ProjectEntity> projectEntities){
+        return projectEntities.stream().map(projectEntity -> {
+            ProjectDTO dto = modelMapper.map(projectEntity, ProjectDTO.class);
+            dto.setTopicDTO(topicMapper.toDTO(projectEntity.getTopic()));
+            return dto;
+        }).collect(Collectors.toList());
     }
 }

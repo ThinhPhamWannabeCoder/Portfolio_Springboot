@@ -10,11 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/domain")
+@RequestMapping("api/user/domain")
 @RequiredArgsConstructor
 public class DomainController {
     private final DomainService domainService;
-    private final DomainSkillRefService domainSkillRefService;
     @GetMapping("/")
     public ResponseEntity<?> getAllDomain(){
         return ResponseEntity.ok().body(domainService.getAll());

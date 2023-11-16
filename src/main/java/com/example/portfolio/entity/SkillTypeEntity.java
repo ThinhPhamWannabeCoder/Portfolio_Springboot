@@ -16,7 +16,7 @@ public class SkillTypeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "skill_type_id")
     private Integer id;
-    @Column(name = "skill_type_name", columnDefinition = "NVARCHAR(10)", nullable = false, unique = true)
+    @Column(name = "skill_type_name", columnDefinition = "NVARCHAR(20)", nullable = false, unique = true)
     private String name;
     @Column(name = "skill_type_desc", columnDefinition = "TEXT", nullable = false)
     private String desc;

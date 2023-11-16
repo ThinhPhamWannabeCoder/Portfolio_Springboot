@@ -1,15 +1,12 @@
 package com.example.portfolio.service.dto;
 
-import com.example.portfolio.entity.TopicEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.util.List;
 
 @Data
 @Builder
@@ -23,4 +20,9 @@ public class ProjectDTO {
     private String name;
     private String desc;
     private Date date;
+    List<ProjectLanguageRefDTO> projectLanguageRefDTOList;
+
+    List<ProjectToolRefDTO> projectToolRefDTOList;
+
+    List<PostDTO> postDTOList;
 }

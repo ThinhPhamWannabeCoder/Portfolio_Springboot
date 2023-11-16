@@ -35,14 +35,16 @@ public class UserEntity {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<UserRoleEntity> userroleList;
 
-//    @OneToMany(mappedBy = "user")
-//    private List<About> aboutList;
-//
-//    @OneToMany(mappedBy = "user")
-//    private List<Post> postList;
-//
-//    @OneToMany(mappedBy = "user")
-//    private List<LikeHolder> likeHolderList;
+    @OneToMany(mappedBy = "user")
+    private List<AboutEntity> aboutEntityList;
+    @OneToMany(mappedBy = "user")
+    private List<IntroEntity> introEntityList;
+
+    @OneToMany(mappedBy = "user")
+    private List<PostEntity> postEntityList;
+
+    @OneToMany(mappedBy = "user")
+    private List<LikeHolderEntity> likeHolderEntityList;
 //
 //    @OneToMany(mappedBy = "user")
 //    private List<Comment> commentList;
