@@ -17,10 +17,10 @@ public class ProjectLanguageRefService {
     public List<ProjectLanguageRefDTO> getAll(){
         return projectLanguageRefMapper.toDTOS(projectLanguageRefRepository.findAll());
     }
-    public List<ProjectLanguageRefDTO> getByProjectId(Integer projectId){
+    public List<ProjectLanguageRefDTO> getAllByProjectId(Integer projectId){
         return projectLanguageRefMapper.toDTOS(projectLanguageRefRepository.findByProjectId(projectId).orElse(null));
     }
-    public List<ProjectLanguageRefDTO> getByLanguageId(Integer languageId){
+    public List<ProjectLanguageRefDTO> getAllByLanguageId(Integer languageId){
         return projectLanguageRefMapper.toDTOS(projectLanguageRefRepository.findByLanguageId(languageId).orElse(null));
     }
 

@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class ProjectLanguageRefDTO {
     private Integer id;
 
-    private ProjectDTO projectDTO;
+    private Integer projectId;
 
     private SkillDTO languageDTO;
 }

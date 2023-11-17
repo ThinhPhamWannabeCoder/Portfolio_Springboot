@@ -20,7 +20,7 @@ public class ProjectToolRefController {
     }
     @GetMapping("/project/{projectId}")
     public ResponseEntity<?> getAllByProjectId(@PathVariable(name = "projectId", required = true) Integer projectId){
-        return ResponseEntity.ok().body(projectToolRefService.getByProjectId(projectId));
+        return ResponseEntity.ok().body(projectToolRefService.getAllByProjectId(projectId));
     }
     @GetMapping("/tool/{toolId}")
     public ResponseEntity<?> getAllSkillsByLanguageId(@PathVariable(name = "toolId", required = true) Integer toolId){

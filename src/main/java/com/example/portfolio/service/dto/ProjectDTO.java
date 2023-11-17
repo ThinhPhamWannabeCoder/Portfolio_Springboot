@@ -15,14 +15,14 @@ import java.util.List;
 public class ProjectDTO {
     private Integer id;
 
-    private TopicDTO topicDTO;
+    private Integer topicId;
 
     private String name;
     private String desc;
     private Date date;
-    List<ProjectLanguageRefDTO> projectLanguageRefDTOList;
-
-    List<ProjectToolRefDTO> projectToolRefDTOList;
-
-    List<PostDTO> postDTOList;
+//    List<ProjectLanguageRefDTO> projectLanguageRefDTOList;
+//
+//    List<ProjectToolRefDTO> projectToolRefDTOList;
+//
+//    List<PostDTO> postDTOList;
 }

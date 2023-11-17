@@ -17,7 +17,7 @@ public class ProjectToolRefService {
     public List<ProjectToolRefDTO> getAll(){
         return projectToolRefMapper.toDTOS(projectToolRefRepository.findAll());
     }
-    public List<ProjectToolRefDTO> getByProjectId(Integer projectId){
+    public List<ProjectToolRefDTO> getAllByProjectId(Integer projectId){
         return projectToolRefMapper.toDTOS(projectToolRefRepository.findByProjectId(projectId).orElse(null));
     }
     public List<ProjectToolRefDTO> getByToolId(Integer toolId){

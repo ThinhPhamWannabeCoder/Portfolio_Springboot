@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class ProjectToolRefDTO {
     private Integer id;
 
-    private ProjectDTO projectDTO;
+    private Integer projectId;
 
 
     private SkillDTO toolDTO;

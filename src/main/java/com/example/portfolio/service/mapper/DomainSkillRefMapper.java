@@ -1,7 +1,10 @@
 package com.example.portfolio.service.mapper;
 
 import com.example.portfolio.entity.DomainSkillRefEntity;
+import com.example.portfolio.repository.DomainRepository;
+import com.example.portfolio.repository.SkillRepository;
 import com.example.portfolio.service.dto.DomainSkillRefDTO;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -15,17 +18,19 @@ public class DomainSkillRefMapper {
     private final ModelMapper modelMapper;
     private final DomainMapper domainMapper;
     private final SkillMapper skillMapper;
+    private final DomainRepository domainRepository;
+    private final SkillRepository skillRepository;
     public DomainSkillRefEntity toEntity(DomainSkillRefDTO domainSkillRefDTO){
-        DomainSkillRefEntity domainSkillRefEntity = modelMapper.map(domainSkillRefDTO, DomainSkillRefEntity.class);
-        domainSkillRefEntity.setDomain(domainMapper.toEntity(domainSkillRefDTO.getDomainDTO()));
-        domainSkillRefEntity.setSkill(skillMapper.toEntity(domainSkillRefDTO.getSkillDTO()));
-        return domainSkillRefEntity;
+        DomainSkillRefEntity entity = modelMapper.map(domainSkillRefDTO, DomainSkillRefEntity.class);
+        entity.setDomain(domainRepository.findById(domainSkillRefDTO.getDomainId()).orElseThrow(()-> new EntityNotFoundException("Khong tim duoc thong tin domain theo id da cho")));
+        entity.setSkill(skillRepository.findById(domainSkillRefDTO.getSkillId()).orElseThrow(()-> new EntityNotFoundException("Khong tim duoc skill voi id da cho")));
+        return entity;
     }
     public DomainSkillRefDTO toDTO(DomainSkillRefEntity domainSkillRefEntity){
-        DomainSkillRefDTO domainSkillRefDTO = modelMapper.map(domainSkillRefEntity, DomainSkillRefDTO.class);
-        domainSkillRefDTO.setDomainDTO(domainMapper.toDTO(domainSkillRefEntity.getDomain()));
-        domainSkillRefDTO.setSkillDTO(skillMapper.toDTO(domainSkillRefEntity.getSkill()));
-        return domainSkillRefDTO;
+        DomainSkillRefDTO dto = modelMapper.map(domainSkillRefEntity, DomainSkillRefDTO.class);
+        dto.setDomainId(domainSkillRefEntity.getDomain().getId());
+        dto.setSkillId(domainSkillRefEntity.getSkill().getId());
+        return dto;
     }
     //    Chuyen doi list
     public List<DomainSkillRefEntity> toEntities(List<DomainSkillRefDTO> domainSkillRefDTOS){
@@ -33,8 +38,8 @@ public class DomainSkillRefMapper {
                 .stream()
                 .map(domainSkillRefDTO -> {
                     DomainSkillRefEntity entity = modelMapper.map(domainSkillRefDTO, DomainSkillRefEntity.class);
-                    entity.setDomain(domainMapper.toEntity(domainSkillRefDTO.getDomainDTO()));
-                    entity.setSkill(skillMapper.toEntity(domainSkillRefDTO.getSkillDTO()));
+                    entity.setDomain(domainRepository.findById(domainSkillRefDTO.getDomainId()).orElseThrow(()-> new EntityNotFoundException("Khong tim duoc thong tin domain theo id da cho")));
+                    entity.setSkill(skillRepository.findById(domainSkillRefDTO.getSkillId()).orElseThrow(()-> new EntityNotFoundException("Khong tim duoc skill voi id da cho")));
                     return entity;
                 })
                 .collect(Collectors.toList());
@@ -44,8 +49,8 @@ public class DomainSkillRefMapper {
         return domainSkillRefEntities.stream()
                 .map(domainSkillRefEntity -> {
                     DomainSkillRefDTO dto = modelMapper.map(domainSkillRefEntity, DomainSkillRefDTO.class);
-                    dto.setSkillDTO(skillMapper.toDTO(domainSkillRefEntity.getSkill()));
-                    dto.setDomainDTO(domainMapper.toDTO(domainSkillRefEntity.getDomain()));
+                    dto.setDomainId(domainSkillRefEntity.getDomain().getId());
+                    dto.setSkillId(domainSkillRefEntity.getSkill().getId());
                     return dto;
                 })
                 .collect(Collectors.toList());

@@ -17,6 +17,9 @@ public class SkillService {
     public List<SkillDTO> getAll(){
         return skillMapper.toDTOS(skillRepository.findAll());
     }
+    public SkillDTO getById(Integer id){
+        return  skillMapper.toDTO(skillRepository.findById(id).orElse(null));
+    }
     public List<SkillDTO> getBySkillTypeId(Integer skillTypeId){
         return skillMapper.toDTOS(skillRepository.findBySkillTypeId(skillTypeId).orElse(null));
     }

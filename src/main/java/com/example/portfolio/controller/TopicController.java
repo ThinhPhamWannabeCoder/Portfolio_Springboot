@@ -1,6 +1,5 @@
 package com.example.portfolio.controller;
 
-import com.example.portfolio.service.SkillService;
 import com.example.portfolio.service.TopicService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +20,6 @@ public class TopicController {
     }
     @GetMapping("/domain/{domainId}")
     public ResponseEntity<?> getAllByDomainId(@PathVariable(name="domainId", required = true) Integer domainId){
-        return ResponseEntity.ok().body(topicService.getByDomainId(domainId));
+        return ResponseEntity.ok().body(topicService.getAllByDomainId(domainId));
     }
 }

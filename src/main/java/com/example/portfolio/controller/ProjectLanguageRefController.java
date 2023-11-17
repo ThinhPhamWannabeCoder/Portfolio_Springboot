@@ -20,10 +20,10 @@ public class ProjectLanguageRefController {
     }
     @GetMapping("/project/{projectId}")
     public ResponseEntity<?> getAllByProjectId(@PathVariable(name = "projectId", required = true) Integer projectId){
-        return ResponseEntity.ok().body(projectLanguageRefService.getByProjectId(projectId));
+        return ResponseEntity.ok().body(projectLanguageRefService.getAllByProjectId(projectId));
     }
     @GetMapping("/language/{languageId}")
     public ResponseEntity<?> getAllSkillsByLanguageId(@PathVariable(name = "languageId", required = true) Integer languageId){
-        return ResponseEntity.ok().body(projectLanguageRefService.getByLanguageId(languageId));
+        return ResponseEntity.ok().body(projectLanguageRefService.getAllByLanguageId(languageId));
     }
 }

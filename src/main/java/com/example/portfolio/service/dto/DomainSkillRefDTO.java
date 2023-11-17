@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class DomainSkillRefDTO {
     private Integer id;
 
-    private DomainDTO domainDTO;
+    private Integer domainId;
 
-    private SkillDTO skillDTO;
+    private Integer skillId;
 }

@@ -11,13 +11,17 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TopicService {
-    private final TopicRepository TopicRepository;
-    private final TopicMapper TopicMapper;
+    private final TopicRepository topicRepository;
+    private final TopicMapper topicMapper;
+
+    public TopicDTO getById(Integer id){
+        return topicMapper.toDTO(topicRepository.findById(id).orElse(null));
+    }
 
     public List<TopicDTO> getAll(){
-        return TopicMapper.toDTOS(TopicRepository.findAll());
+        return topicMapper.toDTOS(topicRepository.findAll());
     }
-    public List<TopicDTO> getByDomainId(Integer domainId){
-        return TopicMapper.toDTOS(TopicRepository.findByDomainId(domainId).orElse(null));
+    public List<TopicDTO> getAllByDomainId(Integer domainId){
+        return topicMapper.toDTOS(topicRepository.findByDomainId(domainId).orElse(null));
     }
 }
