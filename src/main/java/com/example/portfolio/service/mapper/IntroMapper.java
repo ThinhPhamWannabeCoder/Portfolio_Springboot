@@ -1,8 +1,9 @@
 package com.example.portfolio.service.mapper;
 
 import com.example.portfolio.entity.IntroEntity;
-import com.example.portfolio.entity.IntroTypeEntity;
+import com.example.portfolio.repository.UserRepository;
 import com.example.portfolio.service.dto.IntroDTO;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -14,14 +15,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class IntroMapper {
     private final ModelMapper modelMapper;
-    private final UserMapper userMapper;
     private final IntroPlaceMapper introPlaceMapper;
     private final IntroTopicMapper introTopicMapper;
     private final IntroTypeMapper introTypeMapper;
+    private final UserRepository userRepository;
 
     public IntroEntity toEntity(IntroDTO introDTO){
         IntroEntity entity =  modelMapper.map(introDTO, IntroEntity.class);
-        entity.setUser(userMapper.toEntity(introDTO.getUserDTO()));
+        entity.setUser(userRepository.findById(introDTO.getUserId()).orElseThrow(() -> new EntityNotFoundException("Khong tim duoc thong tin user theo Id da cho")));
         entity.setIntroPlace(introPlaceMapper.toEntity(introDTO.getIntroPlaceDTO()));
         entity.setIntroTopic(introTopicMapper.toEntity(introDTO.getIntroTopicDTO()));
         entity.setIntroType(introTypeMapper.toEntity(introDTO.getIntroTypeDTO()));
@@ -29,7 +30,7 @@ public class IntroMapper {
     }
     public IntroDTO toDTO(IntroEntity introEntity){
         IntroDTO dto = modelMapper.map(introEntity, IntroDTO.class);
-        dto.setUserDTO(userMapper.toDTO(introEntity.getUser()));
+        dto.setUserId(introEntity.getUser().getId());
         dto.setIntroPlaceDTO(introPlaceMapper.toDTO(introEntity.getIntroPlace()));
         dto.setIntroTopicDTO(introTopicMapper.toDTO(introEntity.getIntroTopic()));
         dto.setIntroTypeDTO(introTypeMapper.toDTO(introEntity.getIntroType()));
@@ -40,7 +41,7 @@ public class IntroMapper {
     public List<IntroEntity> toEntities(List<IntroDTO> introDTOS){
         return introDTOS.stream().map(introDTO -> {
             IntroEntity entity = modelMapper.map(introDTO, IntroEntity.class);
-            entity.setUser(userMapper.toEntity(introDTO.getUserDTO()));
+            entity.setUser(userRepository.findById(introDTO.getUserId()).orElseThrow(() -> new EntityNotFoundException("Khong tim duoc thong tin user theo Id da cho")));
             entity.setIntroPlace(introPlaceMapper.toEntity(introDTO.getIntroPlaceDTO()));
             entity.setIntroTopic(introTopicMapper.toEntity(introDTO.getIntroTopicDTO()));
             entity.setIntroType(introTypeMapper.toEntity(introDTO.getIntroTypeDTO()));
@@ -50,7 +51,7 @@ public class IntroMapper {
     public List<IntroDTO> toDTOS(List<IntroEntity> introEntities){
         return introEntities.stream().map(introEntity -> {
             IntroDTO dto = modelMapper.map(introEntity, IntroDTO.class);
-            dto.setUserDTO(userMapper.toDTO(introEntity.getUser()));
+            dto.setUserId(introEntity.getUser().getId());
             dto.setIntroPlaceDTO(introPlaceMapper.toDTO(introEntity.getIntroPlace()));
             dto.setIntroTopicDTO(introTopicMapper.toDTO(introEntity.getIntroTopic()));
             dto.setIntroTypeDTO(introTypeMapper.toDTO(introEntity.getIntroType()));

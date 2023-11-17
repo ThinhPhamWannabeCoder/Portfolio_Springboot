@@ -14,7 +14,7 @@ import java.sql.Date;
 public class AboutDTO {
     private Integer id;
 
-    private UserDTO userDTO;
+    private Integer userId;
 
     private String type;
 

@@ -16,5 +16,4 @@ public class IntroPlaceDTO {
 
     private String name;
 
-    private List<IntroDTO> introDTOList;
 }

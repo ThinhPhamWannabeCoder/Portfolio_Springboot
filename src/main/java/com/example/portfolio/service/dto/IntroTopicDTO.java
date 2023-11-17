@@ -13,8 +13,5 @@ import java.util.List;
 @AllArgsConstructor
 public class IntroTopicDTO {
     private Integer id;
-
     private String name;
-
-    private List<IntroDTO> introDTOList;
 }

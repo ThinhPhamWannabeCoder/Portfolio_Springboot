@@ -13,8 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 public class IntroTypeDTO {
     private Integer id;
-
     private String name;
 
-    private List<IntroDTO> introDTOList;
 }

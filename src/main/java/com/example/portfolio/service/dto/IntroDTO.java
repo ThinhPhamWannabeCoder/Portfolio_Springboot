@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class IntroDTO {
     private Integer id;
 
-    private UserDTO userDTO;
+    private Integer userId;
 
     private IntroTypeDTO introTypeDTO;
 
