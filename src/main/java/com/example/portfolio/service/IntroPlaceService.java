@@ -22,4 +22,37 @@ public class IntroPlaceService {
     public IntroPlaceDTO getByName(String placeName){
         return introPlaceMapper.toDTO(introPlaceRepository.findByName(placeName).orElse(null));
     }
+    public IntroPlaceDTO getById(Integer id){
+        return introPlaceMapper.toDTO(introPlaceRepository.findById(id).orElse(null));
+    }
+    public boolean deleteById(Integer id){
+        try{
+            introPlaceRepository.deleteById(id);
+            return true;
+        }
+        catch (Exception e){
+            System.out.println("Khong the xoa thong tin intro place theo id" + e.getMessage());
+            return false;
+        }
+    }
+    public boolean deleteByName(String name){
+        try{
+            introPlaceRepository.deleteByName(name);
+            return true;
+        }
+        catch (Exception e){
+            System.out.println("Khong the xoa thong tin intro place theo name" + e.getMessage());
+            return false;
+        }
+    }
+    public boolean create(IntroPlaceDTO introPlaceDTO){
+        try{
+            introPlaceRepository.save(introPlaceMapper.toEntity(introPlaceDTO));
+            return true;
+        }
+        catch (Exception e){
+            System.out.println("Khong the luu thong tin intro place" + e.getMessage());
+            return false;
+        }
+    }
 }

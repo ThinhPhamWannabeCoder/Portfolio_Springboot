@@ -1,6 +1,7 @@
 package com.example.portfolio.service.mapper;
 
 import com.example.portfolio.entity.ProjectLanguageRefEntity;
+import com.example.portfolio.form.request.FormProjectLanguage;
 import com.example.portfolio.repository.ProjectRepository;
 import com.example.portfolio.repository.SkillRepository;
 import com.example.portfolio.service.dto.ProjectLanguageRefDTO;
@@ -23,6 +24,12 @@ public class ProjectLanguageRefMapper {
         ProjectLanguageRefEntity entity = modelMapper.map(projectLanguageRefDTO, ProjectLanguageRefEntity.class);
         entity.setLanguage(skillRepository.findById(projectLanguageRefDTO.getLanguageDTO().getId()).orElseThrow(() -> new EntityNotFoundException("Khong tim duoc skill theo id da cho")));
         entity.setProject(projectRepository.findById(projectLanguageRefDTO.getProjectId()).orElseThrow(()-> new EntityNotFoundException("Khong tim duoc Project theo id da cho")));
+        return entity;
+    }
+    public ProjectLanguageRefEntity toEntity(FormProjectLanguage formProjectLanguage) {
+        ProjectLanguageRefEntity entity = modelMapper.map(formProjectLanguage, ProjectLanguageRefEntity.class);
+        entity.setProject(projectRepository.findById(formProjectLanguage.getProjectId()).orElseThrow(()-> new EntityNotFoundException("Khong tim duoc Project theo id da cho")));
+        entity.setLanguage(skillRepository.findById(formProjectLanguage.getLanguageId()).orElseThrow(() -> new EntityNotFoundException("Khong tim duoc skill theo id da cho")));
         return entity;
     }
     public ProjectLanguageRefDTO toDTO(ProjectLanguageRefEntity projectLanguageRefEntity){
@@ -48,4 +55,6 @@ public class ProjectLanguageRefMapper {
             return dto;
         }).collect(Collectors.toList());
     }
+
+
 }

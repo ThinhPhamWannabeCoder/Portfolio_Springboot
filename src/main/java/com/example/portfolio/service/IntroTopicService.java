@@ -1,6 +1,7 @@
 package com.example.portfolio.service;
 
 import com.example.portfolio.repository.IntroTopicRepository;
+import com.example.portfolio.service.dto.IntroPlaceDTO;
 import com.example.portfolio.service.dto.IntroTopicDTO;
 import com.example.portfolio.service.mapper.IntroTopicMapper;
 import lombok.RequiredArgsConstructor;
@@ -18,4 +19,41 @@ public class IntroTopicService {
 //    public List<IntroTopicDTO> getByTopicName(String){
 //
 //    }
+public IntroTopicDTO getByName(String topicName){
+    return introTopicMapper.toDTO(introTopicRepository.findByName(topicName).orElse(null));
+}
+    public IntroTopicDTO getById(Integer id){
+        return introTopicMapper.toDTO(introTopicRepository.findById(id).orElse(null));
+    }
+    public boolean deleteById(Integer id){
+        try{
+            introTopicRepository.deleteById(id);
+            return true;
+        }
+        catch (Exception e){
+            System.out.println("Khong the xoa thong tin intro topic theo id" + e.getMessage());
+            return false;
+        }
+
+    }
+    public boolean deleteByName(String name){
+        try{
+            introTopicRepository.deleteByName(name);
+            return true;
+        }
+        catch (Exception e){
+            System.out.println("Khong the xoa thong tin intro topic theo name" + e.getMessage());
+            return false;
+        }
+    }
+    public boolean create(IntroTopicDTO introTopicDTO){
+        try{
+            introTopicRepository.save(introTopicMapper.toEntity(introTopicDTO));
+            return true;
+        }
+        catch (Exception e){
+            System.out.println("Khong the luu thong tin intro name" + e.getMessage());
+            return false;
+        }
+    }
 }

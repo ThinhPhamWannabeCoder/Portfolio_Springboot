@@ -20,6 +20,10 @@ public class IntroService {
 //    public List<IntroDTO> getByTopicName(String){
 //
 //    }
+    public IntroDTO getById(Integer id){
+    return introMapper.toDTO(introRepository.findById(id).orElse(null));
+}
+
     public List<IntroDTO> getAllByIntroTopicId(Integer topicId){
         return introMapper.toDTOS(introRepository.findByIntroTopicId(topicId).orElseThrow(() -> new EntityNotFoundException("Loi tai IntroTopic")));
 
@@ -36,5 +40,25 @@ public class IntroService {
                 request.getTypeId(),
                 request.getPlaceId()
         ).orElseThrow(()-> new EntityNotFoundException("Loi tai Filter")));
+    }
+    public boolean deleteById(Integer id){
+        try{
+            introRepository.deleteById(id);
+            return true;
+        }
+        catch (Exception e){
+            System.out.println("Khong xoa duoc thong tin intro" + e.getMessage());
+            return false;
+        }
+    }
+    public boolean create(IntroDTO introDTO){
+        try{
+            introRepository.save(introMapper.toEntity(introDTO));
+            return true;
+        }
+        catch(Exception e){
+            System.out.println("Khong save dc thong tin intro" + e.getMessage());
+            return false;
+        }
     }
 }

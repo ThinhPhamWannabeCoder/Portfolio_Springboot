@@ -1,6 +1,7 @@
 package com.example.portfolio.service.mapper;
 
 import com.example.portfolio.entity.ProjectToolRefEntity;
+import com.example.portfolio.form.request.FormProjectTool;
 import com.example.portfolio.repository.ProjectRepository;
 import com.example.portfolio.repository.SkillRepository;
 import com.example.portfolio.service.dto.ProjectToolRefDTO;
@@ -23,6 +24,12 @@ public class ProjectToolRefMapper {
         ProjectToolRefEntity entity = modelMapper.map(projectToolRefDTO, ProjectToolRefEntity.class);
         entity.setTool(skillRepository.findById(projectToolRefDTO.getToolDTO().getId()).orElseThrow(() -> new EntityNotFoundException("Khong tim duoc skill theo id da cho")));
         entity.setProject(projectRepository.findById(projectToolRefDTO.getProjectId()).orElseThrow(()-> new EntityNotFoundException("Khong tim duoc Project theo id da cho")));
+        return entity;
+    }
+    public ProjectToolRefEntity toEntity(FormProjectTool formProjectTool) {
+        ProjectToolRefEntity entity = modelMapper.map(formProjectTool, ProjectToolRefEntity.class);
+        entity.setTool(skillRepository.findById(formProjectTool.getToolId()).orElseThrow(() -> new EntityNotFoundException("Khong tim duoc skill theo id da cho")));
+        entity.setProject(projectRepository.findById(formProjectTool.getProjectId()).orElseThrow(()-> new EntityNotFoundException("Khong tim duoc Project theo id da cho")));
         return entity;
     }
     public ProjectToolRefDTO toDTO(ProjectToolRefEntity projectToolRefEntity){
@@ -51,4 +58,6 @@ public class ProjectToolRefMapper {
             return dto;
         }).collect(Collectors.toList());
     }
+
+
 }

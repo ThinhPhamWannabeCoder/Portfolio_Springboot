@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface DomainRepository extends JpaRepository<DomainEntity, Integer> {
 
     Optional<DomainEntity> findByName(String name);
+
+    void deleteByName(String name);
 }

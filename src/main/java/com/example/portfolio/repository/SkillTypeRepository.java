@@ -12,4 +12,5 @@ import java.util.Optional;
 @Repository
 public interface SkillTypeRepository extends JpaRepository<SkillTypeEntity, Integer> {
 
+    void deleteByName(String name);
 }

@@ -1,7 +1,6 @@
 package com.example.portfolio.service;
 
 import com.example.portfolio.form.response.FormSkillResponse;
-import com.example.portfolio.service.dto.DomainDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +22,7 @@ public class SkillsSiteService {
             response.setName(skillDTO.getName());
             response.setDesc(skillDTO.getDesc());
             response.setDomainName(domainSkillRefService.getBySkillId(skillDTO.getId()).stream()
-                    .map(domainSkillRefDTO ->  domainService.getByDomainId(domainSkillRefDTO.getDomainId())
+                    .map(domainSkillRefDTO ->  domainService.getById(domainSkillRefDTO.getDomainId())
                                                 .getName())
                     .collect(Collectors.toList()));
             return response;

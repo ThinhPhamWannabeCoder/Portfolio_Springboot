@@ -22,7 +22,7 @@ public class ProjectSiteService {
 
     public List<FormProjectResponse> getAllProjectsByDomainName(String domainName){
 //        nho kiem tra null trong qua trinh lam
-        DomainDTO domainDTO = domainService.getByDomainName(domainName);
+        DomainDTO domainDTO = domainService.getByName(domainName);
         List<TopicDTO> topicDTOS = topicService.getAllByDomainId(domainDTO.getId());
 //        Thon tin project
         List<ProjectDTO> projectDTOS =  new ArrayList<>();
@@ -64,7 +64,7 @@ public class ProjectSiteService {
                     response.setDesc(projectDTO.getName());
                     response.setDate(projectDTO.getDate());
                     response.setTopicName(topicService.getById(projectDTO.getTopicId()).getName());
-                    response.setDomainName(domainService.getByDomainId(topicService.getById(projectDTO.getTopicId()).getDomainId()).getName());
+                    response.setDomainName(domainService.getById(topicService.getById(projectDTO.getTopicId()).getDomainId()).getName());
                     response.setLanguages(languageRefService.getAllByProjectId(projectDTO.getId())
                             .stream()
                             .map(languageRef -> languageRef.getLanguageDTO().getName())

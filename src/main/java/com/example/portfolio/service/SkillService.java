@@ -23,5 +23,35 @@ public class SkillService {
     public List<SkillDTO> getBySkillTypeId(Integer skillTypeId){
         return skillMapper.toDTOS(skillRepository.findBySkillTypeId(skillTypeId).orElse(null));
     }
+    public boolean deleteById(Integer id){
+        try{
+            skillRepository.deleteById(id);
+            return true;
+        }
+        catch (Exception e){
+            System.out.println("Khong the xoa thong tin skill theo id" + e.getMessage());
+            return false;
+        }
+    }
+    public boolean deleteByName(String name){
+        try{
+            skillRepository.deleteByName(name);
+            return true;
+        }
+        catch (Exception e){
+            System.out.println("Khong the xoa thong tin skill theo ten" + e.getMessage());
+            return false;
+        }
+    }
+    public boolean create(SkillDTO skillDTO){
+        try{
+            skillRepository.save(skillMapper.toEntity(skillDTO));
+            return true;
+        }
+        catch (Exception e){
+            System.out.println("Khong the luu thong tin intro place" + e.getMessage());
+            return false;
+        }
+    }
 
 }

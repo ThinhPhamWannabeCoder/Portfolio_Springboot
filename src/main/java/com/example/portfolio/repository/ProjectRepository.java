@@ -11,4 +11,8 @@ import java.util.Optional;
 @Repository
 public interface ProjectRepository extends JpaRepository<ProjectEntity, Integer> {
     Optional<List<ProjectEntity>> findByTopicId(Integer topicId);
+
+    void deleteByName(String name);
+
+    Optional<ProjectEntity> findByName(String name);
 }

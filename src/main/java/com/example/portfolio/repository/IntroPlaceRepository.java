@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface IntroPlaceRepository extends JpaRepository<IntroPlaceEntity, Integer>{
 
     Optional<IntroPlaceEntity> findByName(String placeName);
+
+    void deleteByName(String name);
 }

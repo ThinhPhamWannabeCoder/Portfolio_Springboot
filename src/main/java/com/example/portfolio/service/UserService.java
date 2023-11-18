@@ -35,9 +35,31 @@ public class UserService implements UserDetailsService {
         List<UserDTO>  userDTOList = userMapper.toDTOS(userRepository.findAll());
         return userDTOList;
     }
-    public UserDTO getById(int user_id){
-        return userMapper.toDTO(userRepository.findById(user_id).orElse(null));
-
+    public UserDTO getById(Integer userId){
+        return userMapper.toDTO(userRepository.findById(userId).orElse(null));
+    }
+    public UserDTO getByEmail(String email ){
+        return userMapper.toDTO(userRepository.findByEmail(email).orElse(null));
+    }
+    public boolean deleteById(Integer id){
+        try{
+            userRepository.deleteById(id);
+            return true;
+        }
+        catch (Exception e){
+            System.out.println("Khong the xoa thong tin user theo id" + e.getMessage());
+            return false;
+        }
+    }
+    public boolean deleteByEmail(String email){
+        try{
+            userRepository.deleteByEmail(email);
+            return true;
+        }
+        catch (Exception e){
+            System.out.println("Khong the xoa thong tin user theo email" + e.getMessage());
+            return false;
+        }
     }
 
     public boolean create(UserDTO userDTO){

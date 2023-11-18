@@ -20,10 +20,41 @@ public class DomainService {
 //    public List<DomainDTO> getByTopicName(String){
 //
 //    }
-    public DomainDTO getByDomainName(String name){
+    public DomainDTO getByName(String name){
         return domainMapper.toDTO(domainRepository.findByName(name).orElseThrow(()-> new EntityNotFoundException("Không tìm được domain name")));
     }
-    public DomainDTO getByDomainId(Integer domainId){
+    public DomainDTO getById(Integer domainId){
         return domainMapper.toDTO(domainRepository.findById(domainId).orElseThrow(()-> new EntityNotFoundException("Không tìm được domain name")));
+    }
+
+    public boolean deleteById(Integer id){
+        try{
+            domainRepository.deleteById(id);
+            return true;
+        }
+        catch (Exception e){
+            System.out.println("Khong the xoa thong tin doamain theo id" + e.getMessage());
+            return false;
+        }
+    }
+    public boolean deleteByName(String name){
+        try{
+            domainRepository.deleteByName(name);
+            return true;
+        }
+        catch (Exception e){
+            System.out.println("Khong the xoa thong tin domain theo ten" + e.getMessage());
+            return false;
+        }
+    }
+    public boolean create(DomainDTO domainDTO){
+        try{
+            domainRepository.save(domainMapper.toEntity(domainDTO));
+            return true;
+        }
+        catch (Exception e){
+            System.out.println("Khong the luu thong tin domain" + e.getMessage());
+            return false;
+        }
     }
 }
