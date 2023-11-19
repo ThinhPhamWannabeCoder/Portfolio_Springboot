@@ -1,10 +1,11 @@
 package com.example.portfolio.service;
 
-import com.example.portfolio.form.request.FormProjectLanguage;
+import com.example.portfolio.entity.ProjectToolRefEntity;
+import com.example.portfolio.entity.SkillEntity;
 import com.example.portfolio.form.request.FormProjectTool;
+import com.example.portfolio.repository.ProjectRepository;
 import com.example.portfolio.repository.ProjectToolRefRepository;
 import com.example.portfolio.repository.SkillRepository;
-import com.example.portfolio.service.dto.ProjectLanguageRefDTO;
 import com.example.portfolio.service.dto.ProjectToolRefDTO;
 import com.example.portfolio.service.mapper.ProjectToolRefMapper;
 import jakarta.persistence.EntityNotFoundException;
@@ -19,6 +20,7 @@ public class ProjectToolRefService {
     private final ProjectToolRefRepository projectToolRefRepository;
     private final ProjectToolRefMapper projectToolRefMapper;
     private final SkillRepository skillRepository;
+    private final ProjectRepository projectRepository;
 
     public List<ProjectToolRefDTO> getAll(){
         return projectToolRefMapper.toDTOS(projectToolRefRepository.findAll());
@@ -43,17 +45,41 @@ public class ProjectToolRefService {
         }
     }
 
-    public boolean save(FormProjectTool formProjectTool){
+    public boolean create(FormProjectTool formProjectTool){
         try{
 //            Kiem tra xem co dung lanuage id nay mang type la languae
             if( skillRepository.findById(formProjectTool.getToolId()).orElseThrow(()-> new EntityNotFoundException(" khong tim dc skill voi id do")).getSkillType().getName().equals("tool")){
                 projectToolRefRepository.save(projectToolRefMapper.toEntity(formProjectTool));
-            };
+                return true;
+            }
+            else {
+                return false;
+            }
 
-            return true;
+
         }
         catch (Exception e){
             System.out.println("Khong the luu thong tin intro place" + e.getMessage());
+            return false;
+        }
+    }
+    public boolean update(Integer id,FormProjectTool dto){
+        try {
+            ProjectToolRefEntity entity = projectToolRefRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Failed to by by Project language by Id"));
+            entity.setProject(projectRepository.findById(dto.getProjectId()).orElseThrow(()-> new EntityNotFoundException("Failed to find project to update")));
+            SkillEntity tool = skillRepository.findById(dto.getToolId()).orElseThrow(()-> new EntityNotFoundException("Khong tim dc skill voi id do"));
+            if(tool.getSkillType().getName().equals("tool")){
+                entity.setTool(tool);
+                projectToolRefRepository.save(entity);
+                return true;
+            }
+            else{
+                System.out.println("Failed to update because of wrong skill");
+                return false;
+            }
+        }
+        catch (Exception e){
+            System.out.println("Failed to update project language" + e.getMessage());
             return false;
         }
     }

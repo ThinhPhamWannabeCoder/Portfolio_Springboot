@@ -26,7 +26,7 @@ public class ProjectLanguageRefMapper {
         entity.setProject(projectRepository.findById(projectLanguageRefDTO.getProjectId()).orElseThrow(()-> new EntityNotFoundException("Khong tim duoc Project theo id da cho")));
         return entity;
     }
-    public ProjectLanguageRefEntity toEntity(FormProjectLanguage formProjectLanguage) {
+    public ProjectLanguageRefEntity FormtoEntity(FormProjectLanguage formProjectLanguage) {
         ProjectLanguageRefEntity entity = modelMapper.map(formProjectLanguage, ProjectLanguageRefEntity.class);
         entity.setProject(projectRepository.findById(formProjectLanguage.getProjectId()).orElseThrow(()-> new EntityNotFoundException("Khong tim duoc Project theo id da cho")));
         entity.setLanguage(skillRepository.findById(formProjectLanguage.getLanguageId()).orElseThrow(() -> new EntityNotFoundException("Khong tim duoc skill theo id da cho")));

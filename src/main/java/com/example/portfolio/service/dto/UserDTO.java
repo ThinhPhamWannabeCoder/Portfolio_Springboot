@@ -12,9 +12,9 @@ import java.util.List;
 @AllArgsConstructor
 public class UserDTO {
     private Integer id;
-    private String email;
-    private String password;
-    private String fullName;
+    private String  email;
+    private String  password;
+    private String  fullName;
     //    private List<RoleDTO> roles ;
     private List<UserRoleDTO> userroleDTOList;
 }

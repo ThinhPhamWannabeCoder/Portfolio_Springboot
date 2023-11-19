@@ -6,10 +6,12 @@ import com.example.portfolio.entity.UserRoleEntity;
 import com.example.portfolio.repository.RoleRepository;
 import com.example.portfolio.repository.UserRepository;
 import com.example.portfolio.repository.UserRoleRepository;
+import com.example.portfolio.service.dto.TopicDTO;
 import com.example.portfolio.service.dto.UserDTO;
 import com.example.portfolio.service.dto.UserRoleDTO;
 import com.example.portfolio.service.mapper.UserMapper;
 import com.example.portfolio.service.mapper.UserRoleMapper;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +64,22 @@ public class UserService implements UserDetailsService {
             return false;
         }
     }
-
+//    public boolean update(Integer id, UserDTO dto){
+//        try{
+//            UserEntity entity  = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Failed to find Topic by Id"));
+//            entity.setEmail(dto.getEmail());
+//            entity.setFullName(dto.getFullName());
+//            entity.setPassword(dto.getPassword());
+//
+//            userRepository.save(entity);
+//            return true;
+//        }
+//        catch (Exception e){
+//            System.out.println("Failed to update Topic" + e.getMessage());
+//            return false;
+//        }
+//    }
+    @Transactional
     public boolean create(UserDTO userDTO){
 
         try{

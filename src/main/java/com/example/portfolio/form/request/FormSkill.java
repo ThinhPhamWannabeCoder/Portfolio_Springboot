@@ -1,5 +1,4 @@
-package com.example.portfolio.service.dto;
-
+package com.example.portfolio.form.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,14 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SkillDTO {
+@Builder
+public class FormSkill {
     private Integer id;
 
-    private SkillTypeDTO skillTypeDTO;
+    private Integer skillTypeId;
 
-    private String name;
-    private String desc;
+    private String  name;
+    private String  desc;
 }

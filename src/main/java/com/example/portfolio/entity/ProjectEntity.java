@@ -8,12 +8,16 @@ import lombok.NoArgsConstructor;
 import java.sql.Date;
 import java.util.List;
 import lombok.Data;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "project")
+@DynamicInsert
+@DynamicUpdate
 public class ProjectEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

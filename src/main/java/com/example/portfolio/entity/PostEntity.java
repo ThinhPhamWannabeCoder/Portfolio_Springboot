@@ -3,6 +3,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.sql.Date;
 import java.util.List;
@@ -12,6 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "post")
+@DynamicInsert
+@DynamicUpdate
 public class PostEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

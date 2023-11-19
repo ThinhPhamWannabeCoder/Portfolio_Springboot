@@ -1,8 +1,11 @@
 package com.example.portfolio.service;
 
+import com.example.portfolio.entity.IntroPlaceEntity;
 import com.example.portfolio.repository.IntroPlaceRepository;
+import com.example.portfolio.repository.IntroRepository;
 import com.example.portfolio.service.dto.IntroPlaceDTO;
 import com.example.portfolio.service.mapper.IntroPlaceMapper;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +55,18 @@ public class IntroPlaceService {
         }
         catch (Exception e){
             System.out.println("Khong the luu thong tin intro place" + e.getMessage());
+            return false;
+        }
+    }
+    public boolean update(Integer id,IntroPlaceDTO dto){
+        try{
+            IntroPlaceEntity entity = introPlaceRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Khong tim duoc thong tin introPlace voi id da cho"));
+            entity.setName(dto.getName());
+            introPlaceRepository.save(entity);
+            return true;
+        }
+        catch (Exception e){
+            System.out.println("Failed to update Introplace " +e.getMessage());
             return false;
         }
     }

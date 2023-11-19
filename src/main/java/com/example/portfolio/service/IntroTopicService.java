@@ -1,9 +1,10 @@
 package com.example.portfolio.service;
 
+import com.example.portfolio.entity.IntroTopicEntity;
 import com.example.portfolio.repository.IntroTopicRepository;
-import com.example.portfolio.service.dto.IntroPlaceDTO;
 import com.example.portfolio.service.dto.IntroTopicDTO;
 import com.example.portfolio.service.mapper.IntroTopicMapper;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +20,9 @@ public class IntroTopicService {
 //    public List<IntroTopicDTO> getByTopicName(String){
 //
 //    }
-public IntroTopicDTO getByName(String topicName){
-    return introTopicMapper.toDTO(introTopicRepository.findByName(topicName).orElse(null));
-}
+    public IntroTopicDTO getByName(String topicName){
+        return introTopicMapper.toDTO(introTopicRepository.findByName(topicName).orElse(null));
+    }
     public IntroTopicDTO getById(Integer id){
         return introTopicMapper.toDTO(introTopicRepository.findById(id).orElse(null));
     }
@@ -53,6 +54,18 @@ public IntroTopicDTO getByName(String topicName){
         }
         catch (Exception e){
             System.out.println("Khong the luu thong tin intro name" + e.getMessage());
+            return false;
+        }
+    }
+    public boolean update(Integer id, IntroTopicDTO dto){
+        try{
+            IntroTopicEntity entity = introTopicRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Khong tim duoc thong tin introTopic voi id da cho"));
+            entity.setName(dto.getName());
+            introTopicRepository.save(entity);
+            return true;
+        }
+        catch (Exception e){
+            System.out.println("Failed to update IntroTopic " +e.getMessage());
             return false;
         }
     }

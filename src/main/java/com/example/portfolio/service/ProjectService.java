@@ -1,8 +1,11 @@
 package com.example.portfolio.service;
 
+import com.example.portfolio.entity.ProjectEntity;
 import com.example.portfolio.repository.ProjectRepository;
+import com.example.portfolio.repository.TopicRepository;
 import com.example.portfolio.service.dto.ProjectDTO;
 import com.example.portfolio.service.mapper.ProjectMapper;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +16,7 @@ import java.util.List;
 public class ProjectService {
     private final ProjectRepository projectRepository;
     private final ProjectMapper projectMapper;
+    private final TopicRepository topicRepository;
     public List<ProjectDTO> getAll(){
         return projectMapper.toDTOS(projectRepository.findAll());
     }
@@ -52,6 +56,19 @@ public class ProjectService {
         }
         catch (Exception e){
             System.out.println("Khong the luu thong tin place" + e.getMessage());
+            return false;
+        }
+    }
+    public boolean update (Integer id,ProjectDTO dto){
+        try{
+            ProjectEntity entity = projectRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Khong tim duoc project theo id"));
+            entity.setTopic(topicRepository.findById(dto.getTopicId()).orElseThrow(() -> new EntityNotFoundException("Khong tim duoc topic thoe id")));
+            entity.setName(dto.getName());
+            entity.setDesc(dto.getDesc());
+            return true;
+        }
+        catch (Exception e){
+            System.out.println("Failed to update project " + e.getMessage());
             return false;
         }
     }
