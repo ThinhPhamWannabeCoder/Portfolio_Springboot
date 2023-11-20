@@ -15,6 +15,4 @@ public interface SkillRepository extends JpaRepository<SkillEntity, Integer> {
     Optional<List<SkillEntity>> findBySkillTypeId(Integer SkillTypeId);
 
     void deleteByName(String name);
-
-    Optional<SkillEntity> findByName(String name);
 }

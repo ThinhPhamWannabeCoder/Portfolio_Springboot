@@ -1,10 +1,6 @@
 package com.example.portfolio.service.mapper;
 
 import com.example.portfolio.entity.IntroEntity;
-import com.example.portfolio.form.request.FormIntro;
-import com.example.portfolio.repository.IntroPlaceRepository;
-import com.example.portfolio.repository.IntroTopicRepository;
-import com.example.portfolio.repository.IntroTypeRepository;
 import com.example.portfolio.repository.UserRepository;
 import com.example.portfolio.service.dto.IntroDTO;
 import jakarta.persistence.EntityNotFoundException;
@@ -23,19 +19,6 @@ public class IntroMapper {
     private final IntroTopicMapper introTopicMapper;
     private final IntroTypeMapper introTypeMapper;
     private final UserRepository userRepository;
-    private final IntroPlaceRepository introPlaceRepository;
-    private final IntroTopicRepository introTopicRepository;
-    private final IntroTypeRepository introTypeRepository;
-
-
-    public IntroEntity formToEntity(FormIntro dto){
-        IntroEntity entity =  modelMapper.map(dto, IntroEntity.class);
-        entity.setUser(userRepository.findById(dto.getUserId()).orElseThrow(() -> new EntityNotFoundException("Khong tim duoc thong tin user theo Id da cho")));
-        entity.setIntroPlace(introPlaceRepository.findById(dto.getPlaceId()).orElseThrow(()-> new EntityNotFoundException("Failed to get place")));
-        entity.setIntroTopic(introTopicRepository.findById(dto.getTopicId()).orElseThrow(()-> new EntityNotFoundException("Failed to get place")));
-        entity.setIntroType(introTypeRepository.findById(dto.getTypeId()).orElseThrow(()-> new EntityNotFoundException("Failed to get place")));
-        return entity;
-    }
 
     public IntroEntity toEntity(IntroDTO introDTO){
         IntroEntity entity =  modelMapper.map(introDTO, IntroEntity.class);

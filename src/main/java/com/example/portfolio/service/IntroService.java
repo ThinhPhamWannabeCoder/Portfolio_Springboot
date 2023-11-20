@@ -1,16 +1,12 @@
 package com.example.portfolio.service;
 
-import com.example.portfolio.entity.IntroEntity;
-import com.example.portfolio.form.request.FormIntro;
 import com.example.portfolio.form.request.FormIntroFilter;
-import com.example.portfolio.repository.*;
+import com.example.portfolio.repository.IntroRepository;
 import com.example.portfolio.service.dto.IntroDTO;
 import com.example.portfolio.service.mapper.IntroMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.thymeleaf.standard.expression.Fragment;
 
 import java.util.List;
 @Service
@@ -18,9 +14,6 @@ import java.util.List;
 public class IntroService {
     private final IntroRepository introRepository;
     private final IntroMapper introMapper;
-    private final IntroPlaceRepository introPlaceRepository;
-    private final IntroTypeRepository introTypeRepository;
-    private final IntroTopicRepository introTopicRepository;
     public List<IntroDTO> getAll(){
         return introMapper.toDTOS(introRepository.findAll());
     }
@@ -48,7 +41,6 @@ public class IntroService {
                 request.getPlaceId()
         ).orElseThrow(()-> new EntityNotFoundException("Loi tai Filter")));
     }
-    @Transactional
     public boolean deleteById(Integer id){
         try{
             introRepository.deleteById(id);
@@ -59,32 +51,13 @@ public class IntroService {
             return false;
         }
     }
-    @Transactional
-    public boolean create(FormIntro request){
+    public boolean create(IntroDTO introDTO){
         try{
-            introRepository.save(introMapper.formToEntity(request));
+            introRepository.save(introMapper.toEntity(introDTO));
             return true;
         }
         catch(Exception e){
             System.out.println("Khong save dc thong tin intro" + e.getMessage());
-            return false;
-        }
-    }
-    @Transactional
-    public  boolean update(Integer id,FormIntro dto){
-        try {
-            IntroEntity entity = introRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Khong tim duoc Intro theo id da cho"));
-
-            entity.setIntroType(introTypeRepository.findById(dto.getTypeId()).orElseThrow(()-> new EntityNotFoundException("Khomg tim duoc introType theo id da cho")));
-            entity.setIntroTopic(introTopicRepository.findById(dto.getTopicId()).orElseThrow(()-> new EntityNotFoundException("Khomg tim duoc introTopic theo id da cho")));
-            entity.setIntroPlace(introPlaceRepository.findById(dto.getPlaceId()).orElseThrow(()-> new EntityNotFoundException("Khomg tim duoc introPlace theo id da cho")));
-            entity.setDesc(dto.getDesc());
-
-            introRepository.save(entity);
-            return true;
-        }
-        catch (Exception e){
-            System.out.println("Failed to update Intro" + e.getMessage());
             return false;
         }
     }

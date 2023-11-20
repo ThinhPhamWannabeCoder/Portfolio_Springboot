@@ -1,10 +1,8 @@
 package com.example.portfolio.service;
 
-import com.example.portfolio.entity.IntroTypeEntity;
 import com.example.portfolio.repository.IntroTypeRepository;
 import com.example.portfolio.service.dto.IntroTypeDTO;
 import com.example.portfolio.service.mapper.IntroTypeMapper;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -54,18 +52,6 @@ public class IntroTypeService {
         }
         catch (Exception e){
             System.out.println("Khong the luu thong tin intro type" + e.getMessage());
-            return false;
-        }
-    }
-    public boolean update(Integer id, IntroTypeDTO dto){
-        try{
-            IntroTypeEntity entity = introTypeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Khong tim duoc thong tin introType voi id da cho"));
-            entity.setName(dto.getName());
-            introTypeRepository.save(entity);
-            return true;
-        }
-        catch (Exception e){
-            System.out.println("Failed to update IntroType " +e.getMessage());
             return false;
         }
     }

@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 
 import java.sql.Date;
 
@@ -14,7 +12,6 @@ import java.sql.Date;
 @AllArgsConstructor
 @Entity
 @Table(name = "about")
-@DynamicUpdate
 public class AboutEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,13 +34,4 @@ public class AboutEntity {
     private  String desc;
     @Column(name = "about_date", nullable = false)
     private Date date;
-    @Override
-    public String toString() {
-        return "AboutEntity{" +
-                "id=" + id +
-                ", type='" + type + '\'' +
-                ", header='" + header + '\'' +
-                // Add other attributes or meaningful information to print
-                '}';
-    }
 }

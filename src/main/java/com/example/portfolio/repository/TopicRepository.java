@@ -12,8 +12,4 @@ import java.util.Optional;
 @Repository
 public interface TopicRepository extends JpaRepository<TopicEntity, Integer> {
     Optional<List<TopicEntity>> findByDomainId(Integer domainId);
-
-    TopicEntity findByName(String name);
-
-    void deleteByName(String name);
 }

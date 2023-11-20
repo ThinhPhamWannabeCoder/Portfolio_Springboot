@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 
 @Data
 @Builder
@@ -14,8 +12,6 @@ import org.hibernate.annotations.DynamicUpdate;
 @AllArgsConstructor
 @Entity
 @Table(name ="user_role")
-@DynamicInsert
-@DynamicUpdate
 public class UserRoleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

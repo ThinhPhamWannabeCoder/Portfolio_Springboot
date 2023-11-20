@@ -2,8 +2,6 @@ package com.example.portfolio.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.List;
 
@@ -13,8 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name="user")
-@DynamicInsert
-@DynamicUpdate
 //@ToString(exclude = "userroleList") // Exclude the userroleList from toString to avoid LazyInitializationException
 public class UserEntity {
     @Id
@@ -52,13 +48,5 @@ public class UserEntity {
 //
 //    @OneToMany(mappedBy = "user")
 //    private List<Comment> commentList;
-    @Override
-    public String toString() {
-        return "UserEntity{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", fullName='" + fullName + '\'' +
-                // Add other attributes or meaningful information to print
-                '}';
-    }
+
 }

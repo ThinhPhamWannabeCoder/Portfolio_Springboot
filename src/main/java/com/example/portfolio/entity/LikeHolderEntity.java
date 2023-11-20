@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 
 import java.sql.Date;
 
@@ -14,8 +12,6 @@ import java.sql.Date;
 @AllArgsConstructor
 @Entity
 @Table(name = "like_holder")
-@DynamicInsert
-@DynamicUpdate
 public class LikeHolderEntity   {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
